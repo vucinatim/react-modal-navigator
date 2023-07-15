@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+
+# production
+/build
+/dist
+
+# environment variables
+.env
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE - VS Code
+.vscode
+
+# IDE - Intellij IDEA
+.idea
