@@ -84,9 +84,9 @@ const ModalRouter: React.FunctionComponent<
             }}
             style={{
               position: "absolute",
-              bottom: "5px",
-              left: "5px",
-              top: "5px",
+              bottom: "10px",
+              left: "10px",
+              top: "10px",
               opacity: 0.7,
               cursor: "pointer",
             }}
@@ -99,12 +99,12 @@ const ModalRouter: React.FunctionComponent<
           <div
             style={{
               position: "absolute",
-              bottom: "5px",
-              right: "5px",
-              top: "5px",
+              bottom: "10px",
+              right: "10px",
+              top: "10px",
               display: "flex",
               alignItems: "center",
-              gap: "5px",
+              gap: "10px",
             }}
           >
             {Object.entries(currentPage.actions || {}).map(

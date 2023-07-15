@@ -14,9 +14,13 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "@babel/preset-typescript",
+            ],
           },
         },
       },
@@ -28,8 +32,27 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      react: path.resolve('./node_modules/react'),
+      "react-modal-navigator": path.resolve(
+        __dirname,
+        "../react-modal-navigator"
+      ), // Adjust the path accordingly
+    },
   },
   externals: {
-    react: "commonjs react",
+    // Use external version of React
+    react: {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React",
+    },
+    "react-dom": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "react-dom",
+      root: "ReactDOM",
+    },
   },
 };
