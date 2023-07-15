@@ -21,16 +21,16 @@ yarn add react-modal-navigator
 
 ## Usage
 
-Firstly, wrap your application with the ModalActionsProvider:
+Firstly, wrap your application with the ModalProvider:
 
 ```jsx
-import { ModalActionsProvider } from 'react-modal-navigator';
+import { ModalProvider } from 'react-modal-navigator';
 
 function App() {
   return (
-    <ModalActionsProvider>
+    <ModalProvider>
       {/* Your app */}
-    </ModalActionsProvider>
+    </ModalProvider>
   );
 }
 ```
