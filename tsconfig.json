@@ -1,7 +1,10 @@
 {
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "compilerOptions": {
       "outDir": "./dist",
       "sourceMap": true,
+      "declaration": true,
       "noImplicitAny": true,
       "module": "commonjs",
       "target": "es6",
@@ -13,5 +16,6 @@
   },
   "include": [
       "./src/**/*"
-  ]
+  ],
+  "exclude": ["node_modules", "dist"]
 }
