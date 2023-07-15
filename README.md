@@ -1,22 +1,22 @@
 
-# react-use-modal
+# react-modal-navigator
 
-react-use-modal is a highly customizable and easy-to-use Modal library for React. This library offers a built-in routing system that allows for multi-step modal dialogs. It comes with a provider to be wrapped around your application that gives access to the useModal() hook, which simplifies setting and accessing modals.
+react-modal-navigator is a highly customizable and easy-to-use Modal library for React. This library offers a built-in routing system that allows for multi-step modal dialogs. It comes with a provider to be wrapped around your application that gives access to the useModal() hook, which simplifies setting and accessing modals.
 
 ## Installation
 
-You can install react-use-modal using npm or yarn.
+You can install react-modal-navigator using npm or yarn.
 
 If you are using npm:
 
 ```bash
-npm install react-use-modal
+npm install react-modal-navigator
 ```
 
 If you are using yarn:
 
 ```bash
-yarn add react-use-modal
+yarn add react-modal-navigator
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ yarn add react-use-modal
 Firstly, wrap your application with the ModalActionsProvider:
 
 ```jsx
-import { ModalActionsProvider } from 'react-use-modal';
+import { ModalActionsProvider } from 'react-modal-navigator';
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
 You can then use the useModal hook in your components:
 
 ```jsx
-import { useModal } from 'react-use-modal';
+import { useModal } from 'react-modal-navigator';
 
 function ExampleComponent() {
   const { push, back, clear } = useModal();
@@ -63,7 +63,7 @@ Based on the code you have provided, here is a simplified example that demonstra
 Here's a basic usage example of the `useModal` hook in a component:
 
 ```jsx
-import { useModal } from 'react-use-modal';
+import { useModal } from 'react-modal-navigator';
 
 const MyComponent = () => {
   const { push, clear } = useModal({

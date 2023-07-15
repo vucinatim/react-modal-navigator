@@ -1,8 +1,9 @@
 import { ReactNode, RefAttributes, forwardRef, useContext, useState, useImperativeHandle, memo, createContext, useCallback, useEffect } from "react";
-import React = require("react");
+
 import Modal from "./Modal";
 import { ModalPages } from "./utils/types";
 import { IoChevronBack } from 'react-icons/io5';
+import React from "react";
 
   
   export type PageRoute = {

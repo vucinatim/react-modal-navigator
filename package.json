@@ -1,5 +1,5 @@
 {
-  "name": "react-use-modal",
+  "name": "react-modal-navigator",
   "version": "1.0.0",
   "description": "React modal component management with an inbuilt routing system.",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vucinatim/react-use-modal.git"
+    "url": "git+https://github.com/vucinatim/react-modal-navigator.git"
   },
   "keywords": [
     "react",
@@ -21,27 +21,31 @@
   "author": "Tim Vučina <tim.vucina@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vucinatim/react-use-modal/issues"
+    "url": "https://github.com/vucinatim/react-modal-navigator/issues"
   },
-  "homepage": "https://github.com/vucinatim/react-use-modal#readme",
+  "homepage": "https://github.com/vucinatim/react-modal-navigator#readme",
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "typescript": "^5.1.6"
   },
   "dependencies": {
     "@types/react-icons": "^3.0.0",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "react-types": "^0.1.0"
   },
   "peerDependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-router-dom": "^5.2.0",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.2.0"
   }
 }

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import React = require("react");
-import ReactDOM = require("react-dom");
+
+
 import { IoClose } from 'react-icons/io5';
 import Divider from "./utils/Divider";
+import React from "react";
+import ReactDOM from "react-dom";
 
 export interface IModal extends React.PropsWithChildren {
   onClose: () => void;

@@ -1,7 +1,7 @@
 import { createContext, useState, useRef } from "react";
-import React = require("react");
 import ModalRouter, { RouterHandle, PageRoute, ModalActionsProvider } from "./ModalRouter";
 import { ModalPages } from "./utils/types";
+import React from "react";
 
 // Create a context for the modal state and functions
 export type ModalContextType = {

@@ -1,5 +1,4 @@
-import React = require("react");
-
+import React from "react";
 
 export interface IDivider extends React.ComponentPropsWithoutRef<'div'> {
   vertical?: boolean;
