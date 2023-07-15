@@ -1,14 +1,13 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: "./src/index.ts",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    libraryTarget: "commonjs2",
   },
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       {
@@ -17,25 +16,20 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: [".ts", ".tsx", ".js"],
   },
   externals: {
-    react: 'commonjs react',
+    react: "commonjs react",
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'styles.css',
-    }),
-  ],
 };

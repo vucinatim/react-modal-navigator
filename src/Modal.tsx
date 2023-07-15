@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
-
-import { IoClose } from 'react-icons/io5';
+import { IoClose } from "react-icons/io5";
 import Divider from "./utils/Divider";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -46,49 +45,98 @@ const Modal: React.FC<IModal> = ({
     };
 
     setIsBrowser(true);
-    window.addEventListener('mousedown', backDropHandler);
-    return () => window.removeEventListener('mousedown', backDropHandler);
+    window.addEventListener("mousedown", backDropHandler);
+    return () => window.removeEventListener("mousedown", backDropHandler);
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
 
     // Wait for the animation to complete, then call onClose
-    console.log('on TransitionEnd');
+    console.log("on TransitionEnd");
     setTimeout(() => {
-      console.log('onClose');
+      console.log("onClose");
       onClose();
     }, 280); // The duration of the animation
   };
 
   const modalContent = (
     <div
-      style={{ zIndex: 9999 }}
-      className={`fixed bottom-0 left-0 right-0 top-0 flex h-full w-full animate-fade-in items-center justify-center bg-gray-900/50 backdrop-blur-sm ${
-        !isVisible && 'animate-fade-out'
-      } ${backdropClassName} transition-all`}
+      style={{
+        zIndex: 9999,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0,0,0,0.3)",
+        backdropFilter: "blur(5px)",
+        WebkitBackdropFilter: "blur(5px)",
+        opacity: isVisible ? 1 : 0,
+      }}
     >
       <div
         ref={modalWrapperRef}
-        className={`max-w-2xl  rounded-lg bg-white shadow-xl ${className} transition-all`}
+        style={{
+          maxWidth: "400px",
+          borderRadius: "10px",
+          backgroundColor: "white",
+          boxShadow: "0 0 10px rgba(0,0,0,0.25)",
+          transition: "all 0.3s ease-out",
+        }}
       >
-        <div className="relative flex items-center gap-5 p-5">
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+            padding: "5px",
+          }}
+        >
           {leading && leading}
           {!leading && (
             <IoClose
               size={25}
               onClick={() => handleClose()}
-              className="absolute bottom-5 left-5 top-5 cursor-pointer opacity-70 hover:scale-105"
+              style={{
+                position: "absolute",
+                top: "5px",
+                left: "5px",
+                cursor: "pointer",
+                opacity: 0.7,
+              }}
             />
           )}
-          <p className="grow text-center font-bold">{title}</p>
+          <p
+            style={{
+              flexGrow: 1,
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            {title}
+          </p>
           {trailing && trailing}
         </div>
-        <Divider className="opacity-50" />
+        <Divider
+          style={{
+            opacity: 0.5,
+          }}
+        />
         <div
-          className={`relative max-h-[80vh] rounded-lg ${
-            !disablePadding && 'p-6'
-          } ${!disableScroll ? 'overflow-auto' : 'overflow-hidden'}`}
+          style={{
+            maxHeight: "80vh",
+            overflow: disableScroll ? "overflow-hidden" : "auto",
+            padding: disablePadding ? "0px" : "10px",
+            borderRadius: "10px",
+          }}
         >
           {children}
         </div>
@@ -99,7 +147,7 @@ const Modal: React.FC<IModal> = ({
   if (isBrowser) {
     return ReactDOM.createPortal(
       modalContent,
-      document.getElementById('modal-root')!
+      document.getElementById("modal-root")!
     );
   } else {
     return null;
