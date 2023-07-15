@@ -1,4 +1,4 @@
-import { createContext, useState, useRef } from "react";
+import { createContext, useState, useRef, useEffect } from "react";
 import ModalRouter, { RouterHandle, PageRoute, ModalActionsProvider } from "./ModalRouter";
 import { ModalPages } from "./utils/types";
 import React from "react";
@@ -24,8 +24,26 @@ const ModalProvider: React.FC<IModalProvider> = ({
   pages,
 }) => {
   const [internalPages, setInternalPages] = useState(pages);
-
+  const modalRootRef = useRef<HTMLDivElement | null>(null);
   const modalRouter = useRef<RouterHandle>(null);
+
+  useEffect(() => {
+    // Create the modal root element if it doesn't exist
+    if (!modalRootRef.current) {
+      const modalRoot = document.createElement("div");
+      modalRoot.id = "modal-root";
+      document.body.appendChild(modalRoot);
+      modalRootRef.current = modalRoot;
+    }
+
+    return () => {
+      // Clean up the modal root element when the component is unmounted
+      if (modalRootRef.current) {
+        document.body.removeChild(modalRootRef.current);
+        modalRootRef.current = null;
+      }
+    };
+  }, []);
 
   const push = (pageRoute: PageRoute) => {
     modalRouter.current?.push(pageRoute);
