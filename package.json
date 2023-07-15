@@ -2,7 +2,7 @@
   "name": "react-modal-navigator",
   "version": "1.0.2",
   "description": "React modal component management with an inbuilt routing system.",
-  "main": "./src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc"
