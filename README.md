@@ -1,7 +1,7 @@
 
 # react-modal-navigator
 
-![Demo Animation] (https://github.com/vucinatim/react-modal-navigator/blob/a4b553ab8ae5b687f5f7f2481b9392ee6b8d1374/demo/assets/react-modal-navigator.gif)
+![Demo Animation](https://github.com/vucinatim/react-modal-navigator/blob/a4b553ab8ae5b687f5f7f2481b9392ee6b8d1374/demo/assets/react-modal-navigator.gif)
 
 react-modal-navigator is a highly customizable and easy-to-use Modal library for React. This library offers a built-in routing system that allows for multi-step modal dialogs. It comes with a provider to be wrapped around your application that gives access to the useModal() hook, which simplifies setting and accessing modals.
 
