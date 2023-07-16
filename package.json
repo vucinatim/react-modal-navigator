@@ -1,6 +1,6 @@
 {
   "name": "react-modal-navigator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React modal component management with an inbuilt routing system.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
