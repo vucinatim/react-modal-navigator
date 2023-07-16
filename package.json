@@ -1,15 +1,15 @@
 {
   "name": "react-modal-navigator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "React modal component management with an inbuilt routing system.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
-    "build": "webpack"
+    "build": "webpack",
+    "dev": "webpack --watch",
+    "test": "jest"
   },
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vucinatim/react-modal-navigator.git"
@@ -28,27 +28,19 @@
   },
   "homepage": "https://github.com/vucinatim/react-modal-navigator#readme",
   "devDependencies": {
-    "@babel/core": "^7.22.9",
-    "@babel/preset-env": "^7.22.9",
-    "@babel/preset-react": "^7.22.5",
-    "@babel/preset-typescript": "^7.22.5",
     "@types/jest": "^29.5.3",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
-    "babel-loader": "^9.1.3",
-    "mini-css-extract-plugin": "^2.7.6",
+    "css-loader": "^6.8.1",
+    "prettier": "3.0.0",
     "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.16.12",
-    "autoprefixer": "^10.4.14",
-    "css-loader": "^6.8.1",
-    "postcss": "^8.4.26",
-    "react-icons": "^4.10.1",
-    "react-types": "^0.1.0"
+    "@react-icons/all-files": "^4.1.0"
   },
   "peerDependencies": {
     "react": "18.2.0",

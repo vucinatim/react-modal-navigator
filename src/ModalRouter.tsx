@@ -11,19 +11,19 @@ import {
   useEffect,
 } from "react";
 
-import Modal from "./Modal";
+import Modal, { AnimationState, ModalOptions } from "./Modal";
 import { ModalPages } from "./utils/types";
-import { IoChevronBack } from "react-icons/io5";
+import { IoChevronBack } from "@react-icons/all-files/io5/IoChevronBack";
 import React from "react";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
+import ReactDOM from "react-dom";
 
 export type PageRoute = {
   id: string;
-  title?: string;
   actions?: { [key: string]: ReactNode };
   props?: any;
   indismissable?: boolean;
-  disablePadding?: boolean;
-  disableScroll?: boolean;
+  modal?: ModalOptions;
 };
 
 export type RouterHandle = {
@@ -44,38 +44,70 @@ const ModalRouter: React.FunctionComponent<
   const [routerStack, setRouterStack] = useState<Stack<PageRoute>>(
     new Stack([])
   );
-  const [isVisible, setIsVisible] = useState(true);
+  const [animationState, setAnimationState] = useState(null);
+
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  const modalContainerRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    const backDropHandler = (e: any) => {
+      if (
+        modalContainerRef.current &&
+        !modalContainerRef.current.contains(e.target)
+      ) {
+        handleClose();
+      }
+    };
+
+    setIsBrowser(true);
+    window.addEventListener("mousedown", backDropHandler);
+    return () => window.removeEventListener("mousedown", backDropHandler);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     push(pageRoute) {
       if (routerStack.peek()?.id === pageRoute.id) return;
+      if (routerStack.isEmpty()) {
+        setAnimationState(AnimationState.OPENING);
+        // Wait for the animation to complete, then set the animation state to null
+        setTimeout(() => {
+          setAnimationState(null);
+        }, 300); // The duration of the animation
+      }
       setRouterStack(routerStack.add(pageRoute));
     },
     back() {
       setRouterStack(routerStack.remove());
     },
     clear() {
-      setIsVisible(false);
-
-      // Wait for the animation to complete, then clear the router stack
-      setTimeout(() => {
-        setRouterStack(routerStack.clear());
-        setIsVisible(true); // Reset visibility for the next use
-      }, 300); // The duration of the animation
+      handleClose();
     },
   }));
 
+  const handleClose = useCallback(() => {
+    if (routerStack.isEmpty()) return;
+    const currentPage = routerStack.peek();
+    if (currentPage.indismissable) return;
+    setAnimationState(AnimationState.CLOSING);
+
+    // Wait for the animation to complete, then clear the router stack
+    setTimeout(() => {
+      setRouterStack(routerStack.clear());
+      setAnimationState(null);
+    }, 300); // The duration of the animation
+  }, []);
+
   if (routerStack.isEmpty()) return <></>;
   const currentPage = routerStack.peek();
-  return (
+  const modal = (
     <Modal
-      onClose={() => {
-        if (currentPage.indismissable) return;
-        onClose?.call(null);
-        setRouterStack(routerStack.clear());
-      }}
+      {...currentPage.modal}
+      animationState={animationState}
+      modalContainerRef={modalContainerRef}
       leading={
-        routerStack.size() > 1 ? (
+        currentPage.modal?.leading ??
+        (routerStack.size() > 1 ? (
           <IoChevronBack
             size={25}
             onClick={(e) => {
@@ -83,57 +115,69 @@ const ModalRouter: React.FunctionComponent<
               setRouterStack(routerStack.remove());
             }}
             style={{
-              position: "absolute",
-              bottom: "10px",
-              left: "10px",
-              top: "10px",
-              opacity: 0.7,
               cursor: "pointer",
+              opacity: 0.7,
             }}
           />
-        ) : undefined
-      }
-      title={currentPage.title ?? currentPage.id}
-      trailing={
-        currentPage.actions && (
-          <div
+        ) : (
+          <IoClose
+            size={25}
+            onClick={handleClose}
             style={{
-              position: "absolute",
-              bottom: "10px",
-              right: "10px",
-              top: "10px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
+              cursor: "pointer",
+              opacity: 0.7,
             }}
-          >
-            {Object.entries(currentPage.actions || {}).map(
-              ([key, actionComponent], index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    if (actions[key]) {
-                      actions[key]();
-                    } else {
-                      console.warn(
-                        `Action "${key}" does not have a callback defined. \n Use useModalAction('${key}', [yourCallback]) to define a callback for this action.`
-                      );
-                    }
-                  }}
-                >
-                  {actionComponent}
-                </div>
-              )
-            )}
-          </div>
-        )
+          />
+        ))
       }
-      disablePadding={currentPage.disablePadding}
-      disableScroll={currentPage.disableScroll}
+      title={currentPage.modal?.title ?? currentPage.id}
+      trailing={
+        <>
+          {currentPage.modal?.trailing}
+          {currentPage.actions && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "10px",
+                right: "10px",
+                top: "10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              {Object.entries(currentPage.actions || {}).map(
+                ([key, actionComponent], index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      if (actions[key]) {
+                        actions[key]();
+                      } else {
+                        console.warn(
+                          `Action "${key}" does not have a callback defined. \n Use useModalAction('${key}', [yourCallback]) to define a callback for this action.`
+                        );
+                      }
+                    }}
+                  >
+                    {actionComponent}
+                  </div>
+                )
+              )}
+            </div>
+          )}
+        </>
+      }
     >
       {pages[currentPage.id]?.(currentPage.props)}
     </Modal>
   );
+
+  if (isBrowser) {
+    return ReactDOM.createPortal(modal, document.getElementById("modal-root")!);
+  } else {
+    return null;
+  }
 });
 
 ModalRouter.displayName = "RoutedModal";

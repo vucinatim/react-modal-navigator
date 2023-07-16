@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface IDivider extends React.ComponentPropsWithoutRef<'div'> {
+export interface IDivider extends React.ComponentPropsWithoutRef<"div"> {
   vertical?: boolean;
 }
 
@@ -8,9 +8,21 @@ const Divider: React.FC<IDivider> = ({ vertical, ...divProps }) => {
   return (
     <div {...divProps}>
       {vertical ? (
-        <div className="h-full w-px bg-gray-300"></div>
+        <div
+          style={{
+            height: "100%",
+            width: "1px",
+            backgroundColor: "gray",
+          }}
+        ></div>
       ) : (
-        <div className="h-px w-full bg-gray-300"></div>
+        <div
+          style={{
+            height: "1px",
+            width: "100%",
+            backgroundColor: "gray",
+          }}
+        ></div>
       )}
     </div>
   );

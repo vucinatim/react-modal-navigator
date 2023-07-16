@@ -1,28 +1,19 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   entry: "./src/index.ts",
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
     libraryTarget: "commonjs2",
   },
-  mode: "development",
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
+        exclude: /node_modules/,
+        use: "ts-loader",
       },
       {
         test: /\.css$/,
@@ -31,17 +22,13 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: [".tsx", ".ts", ".js"],
     alias: {
       react: path.resolve('./node_modules/react'),
-      "react-modal-navigator": path.resolve(
-        __dirname,
-        "../react-modal-navigator"
-      ), // Adjust the path accordingly
+      "react-modal-navigator": path.resolve(__dirname, "../react-modal-navigator"),
     },
   },
   externals: {
-    // Use external version of React
     react: {
       commonjs: "react",
       commonjs2: "react",
@@ -54,5 +41,8 @@ module.exports = {
       amd: "react-dom",
       root: "ReactDOM",
     },
+  },
+  optimization: {
+    usedExports: true,  // Marks the unused exports
   },
 };

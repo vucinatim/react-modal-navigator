@@ -1,57 +1,58 @@
-import { useState, useEffect } from "react";
-import { IoClose } from "react-icons/io5";
 import Divider from "./utils/Divider";
 import React from "react";
-import ReactDOM from "react-dom";
+import "./styles.css";
 
-export interface IModal extends React.PropsWithChildren {
-  onClose: () => void;
-  title: string;
+export enum AnimationState {
+  OPENING,
+  CLOSING,
+}
+
+export type ModalOptions = Omit<
+  ModalProps,
+  "modalContainerRef" & "animationState"
+>;
+
+export interface ModalProps extends React.PropsWithChildren {
+  title?: string;
   leading?: JSX.Element;
   trailing?: JSX.Element;
   disablePadding?: boolean;
   disableScroll?: boolean;
-  backdropClassName?: string;
-  className?: string;
+  modalContainerRef?: React.RefObject<HTMLDivElement>;
+  animationState?: AnimationState;
+  style?: {
+    modalContainer?: React.CSSProperties;
+    modalContent?: React.CSSProperties;
+    modalHeader?: React.CSSProperties;
+    modalLeading?: React.CSSProperties;
+    modalTrailing?: React.CSSProperties;
+    modalTitle?: React.CSSProperties;
+    modalDivider?: React.CSSProperties;
+    modalBody?: React.CSSProperties;
+    openAnimation?: React.CSSProperties;
+    closeAnimation?: React.CSSProperties;
+  };
 }
 
-const Modal: React.FC<IModal> = ({
-  onClose,
+const Modal: React.FC<ModalProps> = ({
   leading,
   trailing,
   children,
   title,
   disablePadding,
   disableScroll,
-  className,
-  backdropClassName,
+  modalContainerRef,
+  animationState,
+  style,
 }) => {
-  const [isBrowser, setIsBrowser] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const modalAnimationOpen: React.CSSProperties = animationState ===
+    AnimationState.OPENING && {
+    animation: `modalOpen 0.3s forwards`,
+  };
 
-  const modalWrapperRef = React.useRef<any>(null);
-
-  useEffect(() => {
-    const backDropHandler = (e: any) => {
-      if (
-        modalWrapperRef.current &&
-        !modalWrapperRef.current.contains(e.target)
-      ) {
-        handleClose();
-      }
-    };
-
-    setIsBrowser(true);
-    window.addEventListener("mousedown", backDropHandler);
-    return () => window.removeEventListener("mousedown", backDropHandler);
-  }, []);
-
-  const handleClose = () => {
-    setIsVisible(false);
-
-    setTimeout(() => {
-      onClose();
-    }, 280); // The duration of the animation
+  const modalAnimationClose: React.CSSProperties = animationState ===
+    AnimationState.CLOSING && {
+    animation: `modalClose 0.3s forwards`,
   };
 
   const modalContainerStyles: React.CSSProperties = {
@@ -69,18 +70,20 @@ const Modal: React.FC<IModal> = ({
     backgroundColor: "rgba(0, 0, 0, 0.3)",
     backdropFilter: "blur(10px)",
     WebkitBackdropFilter: "blur(10px)",
-    opacity: isVisible ? 1 : 0,
-    transition: "opacity 0.3s ease-out",
+    ...modalAnimationOpen,
+    ...modalAnimationClose,
   };
 
   const modalContentStyles: React.CSSProperties = {
-    maxWidth: "400px",
-    borderRadius: "10px",
+    maxWidth: "1000px",
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: "20px",
     backgroundColor: "white",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.25)",
     transition: "all 0.3s ease-out",
-    transform: `translateY(${isVisible ? 0 : "20px"})`,
-    opacity: isVisible ? 1 : 0,
+    ...modalAnimationOpen,
+    ...modalAnimationClose,
   };
 
   const modalHeaderStyles: React.CSSProperties = {
@@ -89,15 +92,7 @@ const Modal: React.FC<IModal> = ({
     alignItems: "center",
     justifyContent: "center",
     gap: "10px",
-    padding: "10px",
-  };
-
-  const modalCloseButtonStyles: React.CSSProperties = {
-    position: "absolute",
-    top: "10px",
-    left: "10px",
-    cursor: "pointer",
-    opacity: 0.7,
+    padding: "20px",
   };
 
   const modalTitleStyles: React.CSSProperties = {
@@ -106,46 +101,62 @@ const Modal: React.FC<IModal> = ({
     fontWeight: "bold",
   };
 
+  const modalLeadingStyles: React.CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    left: "20px",
+    transform: "translateY(-50%)",
+  };
+
+  const modalTrailingStyles: React.CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    right: "20px",
+    transform: "translateY(-50%)",
+  };
+
   const modalDividerStyles: React.CSSProperties = {
-    opacity: 0.5,
+    opacity: 0.1,
   };
 
   const modalBodyStyles: React.CSSProperties = {
     maxHeight: "80vh",
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     overflow: disableScroll ? "overflow-hidden" : "auto",
-    padding: disablePadding ? "0px" : "10px",
-    borderRadius: "10px",
+    padding: disablePadding ? "0px" : "40px",
+    borderRadius: "0 0 20px 20px",
+    backgroundColor: "#f7f7f7",
   };
 
-  const modalContent = (
-    <div style={modalContainerStyles}>
-      <div ref={modalWrapperRef} style={modalContentStyles}>
-        <div style={modalHeaderStyles}>
-          {leading && leading}
-          {!leading && (
-            <IoClose
-              size={25}
-              onClick={handleClose}
-              style={modalCloseButtonStyles}
-            />
+  return (
+    <div style={{ ...style?.modalContainer, ...modalContainerStyles }}>
+      <div
+        ref={modalContainerRef}
+        style={{ ...style?.modalContent, ...modalContentStyles }}
+      >
+        <div style={{ ...style?.modalHeader, ...modalHeaderStyles }}>
+          {leading && (
+            <div style={{ ...style?.modalLeading, ...modalLeadingStyles }}>
+              {leading}
+            </div>
           )}
-          <p style={modalTitleStyles}>{title}</p>
-          {trailing && trailing}
+          <p style={{ ...style?.modalTitle, ...modalTitleStyles }}>{title}</p>
+          {trailing && (
+            <div style={{ ...style?.modalTrailing, ...modalTrailingStyles }}>
+              {trailing}
+            </div>
+          )}
         </div>
-        <Divider style={modalDividerStyles} />
-        <div style={modalBodyStyles}>{children}</div>
+        <Divider style={{ ...style?.modalDivider, ...modalDividerStyles }} />
+        <div style={{ ...style?.modalBody, ...modalBodyStyles }}>
+          {children}
+        </div>
       </div>
     </div>
   );
-
-  if (isBrowser) {
-    return ReactDOM.createPortal(
-      modalContent,
-      document.getElementById("modal-root")!
-    );
-  } else {
-    return null;
-  }
 };
 
 export default Modal;

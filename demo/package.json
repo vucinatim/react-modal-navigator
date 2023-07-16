@@ -13,7 +13,9 @@
     "build": "react-scripts build"
   },
   "devDependencies": {
-    "react-scripts": "latest"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "react-scripts": "latest",
+    "tailwindcss": "^3.3.3"
   },
   "browserslist": {
     "production": [

@@ -1,5 +1,9 @@
 import { createContext, useState, useRef, useEffect } from "react";
-import ModalRouter, { RouterHandle, PageRoute, ModalActionsProvider } from "./ModalRouter";
+import ModalRouter, {
+  RouterHandle,
+  PageRoute,
+  ModalActionsProvider,
+} from "./ModalRouter";
 import { ModalPages } from "./utils/types";
 import React from "react";
 
@@ -9,21 +13,18 @@ export type ModalContextType = {
   pages: ModalPages;
   setPages: (pages: ModalPages) => void;
   push: (pageRoute: PageRoute) => void;
+  back: () => void;
   clear: () => void;
 };
 
 export const ModalContext = createContext<ModalContextType | null>(null);
 
-interface IModalProvider {
-  children: React.ReactNode;
-  pages: ModalPages;
+interface IModalProvider extends React.PropsWithChildren {
+  pages?: ModalPages;
 }
 
-const ModalProvider: React.FC<IModalProvider> = ({
-  children,
-  pages,
-}) => {
-  const [internalPages, setInternalPages] = useState(pages);
+const ModalProvider: React.FC<IModalProvider> = ({ children, pages }) => {
+  const [internalPages, setInternalPages] = useState(pages ?? {});
   const modalRootRef = useRef<HTMLDivElement | null>(null);
   const modalRouter = useRef<RouterHandle>(null);
 
@@ -53,6 +54,10 @@ const ModalProvider: React.FC<IModalProvider> = ({
     modalRouter.current?.clear();
   };
 
+  const back = () => {
+    modalRouter.current?.back();
+  };
+
   const setPages = (newPages: ModalPages) => {
     setInternalPages((prevPages) => ({
       ...prevPages,
@@ -63,7 +68,7 @@ const ModalProvider: React.FC<IModalProvider> = ({
   // Wrap children in the ModalContext provider
   return (
     <ModalContext.Provider
-      value={{ modalRouter, pages: internalPages, push, clear, setPages }}
+      value={{ modalRouter, pages: internalPages, push, clear, setPages, back }}
     >
       <ModalActionsProvider>
         {children}
