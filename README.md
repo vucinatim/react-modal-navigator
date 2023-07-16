@@ -88,7 +88,9 @@ const MyComponent = () => {
   const handleCancelBooking = () => {
     push({
       id: "cancel_booking",
-      title: "Cancel Booking",
+      modal: {
+        title: "Cancel Booking",
+      },
     });
   };
 
@@ -104,6 +106,16 @@ const MyComponent = () => {
 In this example, when the 'Cancel Booking' button is clicked, the `handleCancelBooking` function is invoked, which uses the `push` function provided by the `useModal` hook to open a new modal page. The modal page is defined by the `cancel_booking` key in the object passed to `useModal`. The modal contains a confirmation message and two buttons - one to close the modal without doing anything (No button) and the other to perform some cancel booking logic and then close the modal (Yes button).
 
 ## Options
+
+PageRoute options include:
+
+- `id`: Unique id of the page.
+- `title`: Title of the page.
+- `actions`: An object of actions for the page, where the key is the action name, and the value is a ReactNode.
+- `props`: Props for the page.
+- `indismissable`: If set to true, the modal can't be dismissed by the user.
+- `onClose`: Function that gets called when the modal is closed.
+- `modal`: An object of modal options (shown below)
 
 This library provides multiple options to customize your Modals:
 
@@ -121,15 +133,6 @@ This library provides multiple options to customize your Modals:
   - `modalBody`: Style properties for the body of the modal.
   - `openAnimation`: Style properties for the opening animation of the modal.
   - `closeAnimation`: Style properties for the closing animation of the modal.
-
-PageRoute options include:
-
-- `id`: Unique id of the page.
-- `title`: Title of the page.
-- `actions`: An object of actions for the page, where the key is the action name, and the value is a ReactNode.
-- `props`: Props for the page.
-- `indismissable`: If set to true, the modal can't be dismissed by the user.
-- `onClose`: Function that gets called when the modal is closed.
 
 ## Running the Demo Locally
 
