@@ -24,22 +24,23 @@ export type PageRoute = {
   props?: any;
   indismissable?: boolean;
   modal?: ModalOptions;
+  onClose?: () => void;
 };
 
 export type RouterHandle = {
   push: (page: PageRoute) => void;
-  back: () => void;
+  pop: () => void;
   clear: () => void;
 };
 
 export interface IRoutedModal {
   pages: ModalPages;
-  onClose?: () => void;
+  onClear?: () => void;
 }
 
 const ModalRouter: React.FunctionComponent<
   IRoutedModal & RefAttributes<RouterHandle>
-> = forwardRef(({ pages, onClose }, ref) => {
+> = forwardRef(({ pages, onClear }, ref) => {
   const { actions } = useContext(ModalActionsContext);
   const [routerStack, setRouterStack] = useState<Stack<PageRoute>>(
     new Stack([])
@@ -77,7 +78,7 @@ const ModalRouter: React.FunctionComponent<
       }
       setRouterStack(routerStack.add(pageRoute));
     },
-    back() {
+    pop() {
       setRouterStack(routerStack.remove());
     },
     clear() {
@@ -93,8 +94,10 @@ const ModalRouter: React.FunctionComponent<
 
     // Wait for the animation to complete, then clear the router stack
     setTimeout(() => {
-      setRouterStack(routerStack.clear());
+      setRouterStack(routerStack.remove());
       setAnimationState(null);
+      currentPage.onClose?.();
+      if (routerStack.isEmpty()) onClear?.();
     }, 300); // The duration of the animation
   }, []);
 

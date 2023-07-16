@@ -42,7 +42,7 @@ You can then use the useModal hook in your components:
 import { useModal } from 'react-modal-navigator';
 
 function ExampleComponent() {
-  const { push, back, clear } = useModal();
+  const { push, pop, clear } = useModal();
 
   return (
     /* Your component */
@@ -53,7 +53,7 @@ function ExampleComponent() {
 The useModal hook provides three methods:
 
 - `push`: Opens a new modal page.
-- `back`: Navigates back in the modal navigation stack.
+- `pop`: Navigates back in the modal navigation stack.
 - `clear`: Closes the modal and clears the navigation stack.
 
 Based on the code you have provided, here is a simplified example that demonstrates the usage of the `useModal` hook. This example can be added to the readme file under the 'Example Usage' section:
@@ -107,15 +107,20 @@ In this example, when the 'Cancel Booking' button is clicked, the `handleCancelB
 
 This library provides multiple options to customize your Modals:
 
-- `onClose`: Function that gets called when the modal is closed.
 - `title`: The title of the modal.
 - `leading`: A JSX element that is placed at the leading of the modal.
 - `trailing`: A JSX element that is placed at the trailing of the modal.
-- `children`: The content inside the modal.
-- `disablePadding`: If set to true, the padding around the modal content is disabled.
-- `disableScroll`: If set to true, scrolling inside the modal is disabled.
-- `className`: A string that gets added to the className of the modal container.
-- `backdropClassName`: A string that gets added to the className of the modal backdrop.
+- `style`: An object allowing for granular control over various parts of the modal's styles. This includes:
+  - `modalContainer`: Style properties for the outer container of the modal.
+  - `modalContent`: Style properties for the inner content of the modal.
+  - `modalHeader`: Style properties for the header of the modal.
+  - `modalLeading`: Style properties for the leading JSX element of the modal.
+  - `modalTrailing`: Style properties for the trailing JSX element of the modal.
+  - `modalTitle`: Style properties for the title of the modal.
+  - `modalDivider`: Style properties for the divider in the modal.
+  - `modalBody`: Style properties for the body of the modal.
+  - `openAnimation`: Style properties for the opening animation of the modal.
+  - `closeAnimation`: Style properties for the closing animation of the modal.
 
 PageRoute options include:
 
@@ -124,8 +129,7 @@ PageRoute options include:
 - `actions`: An object of actions for the page, where the key is the action name, and the value is a ReactNode.
 - `props`: Props for the page.
 - `indismissable`: If set to true, the modal can't be dismissed by the user.
-- `disablePadding`: If set to true, the padding of the modal page content is disabled.
-- `disableScroll`: If set to true, scrolling inside the modal page is disabled.
+- `onClose`: Function that gets called when the modal is closed.
 
 ## Running the Demo Locally
 

@@ -13,7 +13,7 @@ export type ModalContextType = {
   pages: ModalPages;
   setPages: (pages: ModalPages) => void;
   push: (pageRoute: PageRoute) => void;
-  back: () => void;
+  pop: () => void;
   clear: () => void;
 };
 
@@ -54,8 +54,8 @@ const ModalProvider: React.FC<IModalProvider> = ({ children, pages }) => {
     modalRouter.current?.clear();
   };
 
-  const back = () => {
-    modalRouter.current?.back();
+  const pop = () => {
+    modalRouter.current?.pop();
   };
 
   const setPages = (newPages: ModalPages) => {
@@ -68,7 +68,7 @@ const ModalProvider: React.FC<IModalProvider> = ({ children, pages }) => {
   // Wrap children in the ModalContext provider
   return (
     <ModalContext.Provider
-      value={{ modalRouter, pages: internalPages, push, clear, setPages, back }}
+      value={{ modalRouter, pages: internalPages, push, pop, clear, setPages }}
     >
       <ModalActionsProvider>
         {children}
