@@ -1,9 +1,12 @@
-
 # react-modal-navigator
 
 ![Demo Animation](https://github.com/vucinatim/react-modal-navigator/blob/a4b553ab8ae5b687f5f7f2481b9392ee6b8d1374/demo/assets/react-modal-navigator.gif)
 
 react-modal-navigator is a highly customizable and easy-to-use Modal library for React. This library offers a built-in routing system that allows for multi-step modal dialogs. It comes with a provider to be wrapped around your application that gives access to the useModal() hook, which simplifies setting and accessing modals.
+
+## Live Demo
+
+Check out the live demo [here](https://stackblitz.com/edit/stackblitz-starters-boqedm?file=src%2FApp.tsx).
 
 ## Installation
 
@@ -26,14 +29,10 @@ yarn add react-modal-navigator
 Firstly, wrap your application with the ModalProvider:
 
 ```jsx
-import { ModalProvider } from 'react-modal-navigator';
+import { ModalProvider } from "react-modal-navigator";
 
 function App() {
-  return (
-    <ModalProvider>
-      {/* Your app */}
-    </ModalProvider>
-  );
+  return <ModalProvider>{/* Your app */}</ModalProvider>;
 }
 ```
 
@@ -59,13 +58,12 @@ The useModal hook provides three methods:
 
 Based on the code you have provided, here is a simplified example that demonstrates the usage of the `useModal` hook. This example can be added to the readme file under the 'Example Usage' section:
 
-
 # Example Usage
 
 Here's a basic usage example of the `useModal` hook in a component:
 
 ```jsx
-import { useModal } from 'react-modal-navigator';
+import { useModal } from "react-modal-navigator";
 
 const MyComponent = () => {
   const { push, clear } = useModal({
@@ -73,14 +71,14 @@ const MyComponent = () => {
       <div>
         <p>Are you sure that you wish to cancel this booking?</p>
 
-        <button onClick={() => clear()}>
-          No
-        </button>
+        <button onClick={() => clear()}>No</button>
 
-        <button onClick={() => {
-          // cancel booking logic
-          clear();
-        }}>
+        <button
+          onClick={() => {
+            // cancel booking logic
+            clear();
+          }}
+        >
           Yes
         </button>
       </div>
@@ -89,17 +87,15 @@ const MyComponent = () => {
 
   const handleCancelBooking = () => {
     push({
-      id: 'cancel_booking',
-      title: 'Cancel Booking',
+      id: "cancel_booking",
+      title: "Cancel Booking",
     });
   };
 
   return (
     <div>
       {/* Your component */}
-      <button onClick={handleCancelBooking}>
-        Cancel Booking
-      </button>
+      <button onClick={handleCancelBooking}>Cancel Booking</button>
     </div>
   );
 };
