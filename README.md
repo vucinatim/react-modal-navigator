@@ -126,3 +126,64 @@ PageRoute options include:
 - `indismissable`: If set to true, the modal can't be dismissed by the user.
 - `disablePadding`: If set to true, the padding of the modal page content is disabled.
 - `disableScroll`: If set to true, scrolling inside the modal page is disabled.
+
+## Running the Demo Locally
+
+1. First, clone the repository:
+
+   ```
+   git clone https://github.com/vucinatim/react-modal-navigator.git
+   ```
+
+2. Navigate into the root directory of the project:
+
+   ```
+   cd react-modal-navigator
+   ```
+
+3. Install the dependencies:
+
+   ```
+   yarn install
+   ```
+
+4. Link the package for local development:
+
+   ```
+   yarn link
+   ```
+
+5. Start the package in development mode with hot reloading:
+
+   ```
+   yarn watch
+   ```
+
+   Leave this process running. It will rebuild your package whenever you save a file, allowing your demo to stay up-to-date with your changes.
+
+6. In a new terminal window, navigate to your demo directory:
+
+   ```
+   cd demo
+   ```
+
+7. Install the dependencies in the demo:
+
+   ```
+   yarn install
+   ```
+
+8. Link the local package to the demo:
+
+   ```
+   yarn link "react-modal-navigator"
+   ```
+
+9. Run the demo:
+   ```
+   yarn start
+   ```
+
+This will start the demo application on your local development server.
+
+With this setup, any changes you make to the `react-modal-navigator` package will be automatically reflected in your locally running demo application, thanks to the hot reloading feature.
