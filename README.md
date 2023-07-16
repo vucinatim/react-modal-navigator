@@ -156,7 +156,7 @@ PageRoute options include:
 5. Start the package in development mode with hot reloading:
 
    ```
-   yarn watch
+   yarn dev
    ```
 
    Leave this process running. It will rebuild your package whenever you save a file, allowing your demo to stay up-to-date with your changes.
